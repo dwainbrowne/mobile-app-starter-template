@@ -1,35 +1,48 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AppShellContent, CustomTabBar, Drawer, QuickActionsMenu } from '@/components/app-shell';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+    <View style={styles.container}>
+      {/* Drawer overlay - highest z-index */}
+      <Drawer />
+
+      {/* Main content with tabs */}
+      <View style={styles.mainContent}>
+        <AppShellContent>
+          <Tabs
+            tabBar={(props) => <CustomTabBar {...props} />}
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {/* All tab screens - visibility controlled by DynamicTabContext */}
+            <Tabs.Screen name="index" />
+            <Tabs.Screen name="transactions" />
+            <Tabs.Screen name="recurring" />
+            <Tabs.Screen name="receipts" />
+
+            {/* Hidden screens */}
+            <Tabs.Screen name="add" options={{ href: null }} />
+            <Tabs.Screen name="explore" options={{ href: null }} />
+          </Tabs>
+        </AppShellContent>
+      </View>
+
+      {/* QuickActionsMenu modal */}
+      <QuickActionsMenu />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  mainContent: {
+    flex: 1,
+  },
+});

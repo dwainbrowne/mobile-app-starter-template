@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "affordly-app-expo",
-    "slug": "affordly-app-expo",
+    "name": "Mobile Starter Template",
+    "slug": "mobile-starter-template",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "affordlyappexpo",
+    "scheme": "mobilestartertemplate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

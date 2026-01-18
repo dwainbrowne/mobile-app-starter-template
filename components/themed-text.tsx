@@ -1,21 +1,26 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { useThemeColors } from '@/contexts/ThemeContext';
 
 export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
+  variant?: 'primary' | 'secondary' | 'muted' | 'inverse' | 'accent';
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
 export function ThemedText({
   style,
-  lightColor,
-  darkColor,
+  variant = 'primary',
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const colors = useThemeColors();
+
+  const color =
+    variant === 'secondary' ? colors.textSecondary :
+      variant === 'muted' ? colors.textMuted :
+        variant === 'inverse' ? colors.textInverse :
+          variant === 'accent' ? colors.accent :
+            colors.text;
 
   return (
     <Text
@@ -25,7 +30,7 @@ export function ThemedText({
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
+        type === 'link' ? [styles.link, { color: colors.primary }] : undefined,
         style,
       ]}
       {...rest}
@@ -55,6 +60,5 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: '#0a7ea4',
   },
 });

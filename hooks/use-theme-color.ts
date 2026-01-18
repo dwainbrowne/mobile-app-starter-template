@@ -1,21 +1,29 @@
 /**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
+ * Theme Color Hook
+ *
+ * Uses the new multi-theme system from ThemeContext.
+ * For direct palette access, use useThemeColors() from ThemeContext.
  */
 
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useThemeColors } from '@/contexts/ThemeContext';
+import type { ThemePalette } from '@/interfaces/theme';
 
+/**
+ * Get a color from the current theme palette
+ * @param props - Optional light/dark overrides
+ * @param colorName - Key from ThemePalette
+ */
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof ThemePalette
 ) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
+  const colors = useThemeColors();
+  const isDark = colors.background === '#0F172A' || colors.background === '#000000';
+  const mode = isDark ? 'dark' : 'light';
+  const colorFromProps = props[mode];
 
   if (colorFromProps) {
     return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
   }
+  return colors[colorName];
 }
