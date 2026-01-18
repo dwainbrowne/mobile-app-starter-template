@@ -135,6 +135,34 @@ export const TAB_CONFIGS: Record<string, TabConfig> = {
       color: '#6366F1',
     },
   },
+
+  // Secondary tab system - for drawer menu items that need different tabs
+  secondary: {
+    id: 'secondary',
+    tabs: [
+      { name: 'documents', title: 'Add Photos', icon: 'camera' },
+      { name: 'scenarios', title: 'Signature', icon: 'create' },
+    ],
+    floatingAction: {
+      icon: 'mic',
+      label: 'Notes',
+      color: '#6366F1',
+    },
+  },
+
+  // Tools/utilities tab configuration
+  tools: {
+    id: 'tools',
+    tabs: [
+      { name: 'modal', title: 'Components', icon: 'layers' },
+      { name: 'explore', title: 'Explore', icon: 'compass' },
+    ],
+    floatingAction: {
+      icon: 'code',
+      label: 'Demo',
+      color: '#10B981',
+    },
+  },
 };
 
 interface DynamicTabContextType {

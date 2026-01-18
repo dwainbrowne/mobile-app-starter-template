@@ -28,6 +28,11 @@ export default function TabLayout() {
             {/* Hidden screens */}
             <Tabs.Screen name="add" options={{ href: null }} />
             <Tabs.Screen name="explore" options={{ href: null }} />
+            <Tabs.Screen name="webview" options={{ href: null }} />
+            <Tabs.Screen name="documents" options={{ href: null }} />
+            <Tabs.Screen name="scenarios" options={{ href: null }} />
+            <Tabs.Screen name="activity" options={{ href: null }} />
+            <Tabs.Screen name="modal" options={{ href: null }} />
           </Tabs>
         </AppShellContent>
       </View>

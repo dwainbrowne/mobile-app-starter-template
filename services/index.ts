@@ -6,4 +6,5 @@
 
 export * from './querystring.service';
 export * from './settings.service';
+export * from './webcache.service';
 

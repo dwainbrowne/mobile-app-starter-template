@@ -24,6 +24,7 @@ import { appFeatures, appIdentity, siteNavigation } from '@/config';
 import { getFullVersionString } from '@/config/auth.config';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDrawer } from '@/contexts/DrawerContext';
+import { useDynamicTabs } from '@/contexts/DynamicTabContext';
 import { useFeedback } from '@/contexts/FeedbackContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import type { DrawerMenuItem } from '@/interfaces';
@@ -36,6 +37,7 @@ export default function Drawer() {
   const { isOpen, closeDrawer } = useDrawer();
   const { user, signOut } = useAuth();
   const { openFeedbackModal } = useFeedback();
+  const { setTabConfig, resetToDefault } = useDynamicTabs();
   const colors = useThemeColors();
   const features = appFeatures;
   const { appName } = appIdentity;
@@ -84,10 +86,30 @@ export default function Drawer() {
 
     closeDrawer();
 
-    // Handle external URL
+    // Handle external URL (opens in system browser)
     if (item.url) {
       setTimeout(async () => {
         await WebBrowser.openBrowserAsync(item.url!);
+      }, 300);
+      return;
+    }
+
+    // Handle in-app WebView URL (with caching)
+    if (item.webUrl) {
+      // Set tab config if specified, otherwise reset to default
+      if (item.tabConfig) {
+        setTabConfig(item.tabConfig);
+      } else {
+        resetToDefault();
+      }
+      setTimeout(() => {
+        router.push({
+          pathname: '/(tabs)/webview',
+          params: {
+            url: encodeURIComponent(item.webUrl!),
+            title: item.title,
+          },
+        } as any);
       }, 300);
       return;
     }
@@ -106,6 +128,7 @@ export default function Drawer() {
         return;
 
       case 'settings':
+        resetToDefault(); // Settings uses default tabs
         if (item.route) {
           setTimeout(() => router.push(item.route as any), 300);
         }
@@ -120,6 +143,12 @@ export default function Drawer() {
         return;
 
       default:
+        // Set tab config if specified for route navigation
+        if (item.tabConfig) {
+          setTabConfig(item.tabConfig);
+        } else {
+          resetToDefault();
+        }
         if (item.route) {
           setTimeout(() => router.push(item.route as any), 300);
         }
@@ -206,6 +235,14 @@ export default function Drawer() {
                 {item.url && (
                   <Ionicons
                     name="open-outline"
+                    size={16}
+                    color={colors.textSecondary}
+                    style={styles.externalIcon}
+                  />
+                )}
+                {item.webUrl && (
+                  <Ionicons
+                    name="globe-outline"
                     size={16}
                     color={colors.textSecondary}
                     style={styles.externalIcon}

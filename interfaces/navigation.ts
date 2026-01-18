@@ -21,8 +21,10 @@ export interface DrawerMenuItem {
   title: string;
   icon: string; // Icon name (Ionicons)
   route?: string; // Internal route to navigate to
-  url?: string; // External HTTP URL to open
+  url?: string; // External HTTP URL to open in system browser
+  webUrl?: string; // URL to open in in-app WebView (with caching)
   action?: 'settings' | 'signout' | 'feedback' | 'help'; // Special actions
+  tabConfig?: string; // Tab configuration ID to use when navigating (e.g., 'documents', 'secondary')
   dividerAfter?: boolean; // Show divider after this item
 }
 

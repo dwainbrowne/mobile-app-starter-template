@@ -1,14 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { AppModal, Card, CardSection } from '@/components/ui';
-import { useTheme } from '@/contexts/ThemeContext';
-
 /**
  * Modal Demo Screen - Showcases the reusable AppModal component
+ *
+ * Navigation: Tabbed (keeps bottom tabs visible)
+ * Access: Drawer menu → "Modal Examples"
  *
  * Demonstrates:
  * - Medium and Tall modal sizes
@@ -16,9 +10,16 @@ import { useTheme } from '@/contexts/ThemeContext';
  * - OK/Cancel button configurations
  * - Blur background effect
  */
+
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { AppModal, Card, CardSection } from '@/components/ui';
+import { layout, spacing } from '@/config';
+import { useTheme } from '@/contexts/ThemeContext';
+
 export default function ModalScreen() {
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
 
   // Modal states
@@ -38,20 +39,21 @@ export default function ModalScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
-      {/* Header */}
-      <View style={[styles.header, { borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
-          <Ionicons name="close" size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>Modal Examples</Text>
-        <View style={styles.placeholder} />
-      </View>
+    <View style={[styles.container, { backgroundColor: colors.surface }]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.content}
+      >
+        {/* Page Header */}
+        <View style={styles.header}>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Modal Examples</Text>
+          <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
+            Tap buttons to see different modal configurations
+          </Text>
+        </View>
 
-      {/* Content */}
-      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <Text style={[styles.description, { color: colors.textSecondary }]}>
-          Tap any button below to see different modal configurations with blur background effect.
+          The modal component features a blur background, animated entrance/exit, and supports dynamic content.
         </Text>
 
         {/* Modal Size Examples */}
@@ -105,7 +107,7 @@ export default function ModalScreen() {
           <View style={styles.infoCard}>
             <Ionicons name="information-circle-outline" size={24} color={colors.primary} />
             <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              The modal component features a blur background, animated entrance/exit, and supports dynamic content swapping. Buttons are part of the internal component.
+              Buttons are part of the internal component. The modal supports scrollable content for longer forms.
             </Text>
           </View>
         </Card>
@@ -128,7 +130,7 @@ export default function ModalScreen() {
           </View>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Medium Size Modal</Text>
           <Text style={[styles.modalDescription, { color: colors.textSecondary }]}>
-            This modal takes up 60% of the screen height. It's perfect for simple confirmations, brief information displays, or quick actions.
+            This modal takes up 60% of the screen height. It&apos;s perfect for simple confirmations, brief information displays, or quick actions.
           </Text>
         </View>
       </AppModal>
@@ -154,7 +156,7 @@ export default function ModalScreen() {
           </View>
           <Text style={[styles.modalTitle, { color: colors.text }]}>Tall Size Modal</Text>
           <Text style={[styles.modalDescription, { color: colors.textSecondary }]}>
-            This modal takes up 85% of the screen height. It's ideal for forms, detailed content, lists, or any content that needs more space.
+            This modal takes up 85% of the screen height. It&apos;s ideal for forms, detailed content, lists, or any content that needs more space.
           </Text>
 
           <View style={styles.featureList}>
@@ -242,34 +244,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-  },
-  closeButton: {
-    padding: 4,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  placeholder: {
-    width: 32,
-  },
-  content: {
+  scrollView: {
     flex: 1,
   },
-  contentContainer: {
-    padding: 16,
+  content: {
+    padding: layout.screenPadding,
+    paddingBottom: layout.tabBarPadding,
+    gap: layout.listItemGap,
+  },
+  header: {
+    marginBottom: spacing.sm,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    marginTop: 4,
   },
   description: {
     fontSize: 14,
     lineHeight: 20,
-    marginBottom: 20,
   },
   demoButton: {
     flexDirection: 'row',

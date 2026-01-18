@@ -1,19 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import { Card, CardSection, ScreenWrapper } from '@/components/ui';
-import { spacing } from '@/config';
-import { useThemeColors } from '@/contexts/ThemeContext';
-
 /**
  * What-If Scenarios Screen
  *
- * Navigation: Standalone (no bottom tabs)
+ * Navigation: Tabbed (keeps bottom tabs visible)
  * Access: Drawer menu → "What-If Scenarios"
  *
  * Allows users to simulate financial scenarios.
  */
+
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+
+import { Card, CardSection } from '@/components/ui';
+import { layout, spacing } from '@/config';
+import { useThemeColors } from '@/contexts/ThemeContext';
 
 interface Scenario {
   id: string;
@@ -58,12 +58,18 @@ export default function ScenariosScreen() {
   const colors = useThemeColors();
 
   return (
-    <ScreenWrapper
-      title="What-If Scenarios"
-      subtitle="Explore financial possibilities"
-      mode="standalone"
-      backIcon="back"
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.surface }]}
+      contentContainerStyle={styles.content}
     >
+      {/* Page Header */}
+      <View style={styles.header}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>What-If Scenarios</Text>
+        <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
+          Explore financial possibilities
+        </Text>
+      </View>
+
       <Text style={[styles.description, { color: colors.textSecondary }]}>
         Create hypothetical scenarios to see how changes would affect your finances.
       </Text>
@@ -100,15 +106,33 @@ export default function ScenariosScreen() {
           </View>
         </Card>
       </CardSection>
-    </ScreenWrapper>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    padding: layout.screenPadding,
+    paddingBottom: layout.tabBarPadding,
+    gap: layout.listItemGap,
+  },
+  header: {
+    marginBottom: spacing.sm,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    marginTop: 4,
+  },
   description: {
     fontSize: 15,
     lineHeight: 22,
-    marginBottom: spacing.md,
   },
   scenarioCard: {
     marginBottom: spacing.sm,

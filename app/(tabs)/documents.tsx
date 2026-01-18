@@ -1,19 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import { Card, CardSection, ScreenWrapper } from '@/components/ui';
-import { spacing } from '@/config';
-import { useThemeColors } from '@/contexts/ThemeContext';
-
 /**
  * My Documents Screen
  *
- * Navigation: Standalone (no bottom tabs)
+ * Navigation: Tabbed (keeps bottom tabs visible)
  * Access: Drawer menu → "My Documents"
  *
  * Document management and file storage.
  */
+
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { Card, CardSection } from '@/components/ui';
+import { layout, spacing } from '@/config';
+import { useThemeColors } from '@/contexts/ThemeContext';
 
 interface DocumentFolder {
   id: string;
@@ -40,12 +40,18 @@ export default function DocumentsScreen() {
   const colors = useThemeColors();
 
   return (
-    <ScreenWrapper
-      title="My Documents"
-      subtitle="Manage your files and receipts"
-      mode="standalone"
-      backIcon="back"
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.surface }]}
+      contentContainerStyle={styles.content}
     >
+      {/* Page Header */}
+      <View style={styles.header}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>My Documents</Text>
+        <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
+          Manage your files and receipts
+        </Text>
+      </View>
+
       <CardSection title="Folders">
         <View style={styles.folderGrid}>
           {folders.map((folder) => (
@@ -100,11 +106,30 @@ export default function DocumentsScreen() {
           </View>
         </TouchableOpacity>
       </Card>
-    </ScreenWrapper>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    padding: layout.screenPadding,
+    paddingBottom: layout.tabBarPadding,
+    gap: layout.listItemGap,
+  },
+  header: {
+    marginBottom: spacing.sm,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    marginTop: 4,
+  },
   folderGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

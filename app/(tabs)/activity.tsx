@@ -1,19 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import { Card, ScreenWrapper } from '@/components/ui';
-import { spacing } from '@/config';
-import { useThemeColors } from '@/contexts/ThemeContext';
-
 /**
  * Activity Logs Screen
  *
- * Navigation: Standalone (no bottom tabs)
+ * Navigation: Tabbed (keeps bottom tabs visible)
  * Access: Drawer menu → "Activity Logs"
  *
  * Shows user activity history and audit trail.
  */
+
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { Card } from '@/components/ui';
+import { layout, spacing } from '@/config';
+import { useThemeColors } from '@/contexts/ThemeContext';
 
 interface ActivityItem {
   id: string;
@@ -153,28 +153,32 @@ export default function ActivityScreen() {
   );
 
   return (
-    <ScreenWrapper
-      title="Activity Logs"
-      subtitle="Your recent actions"
-      mode="standalone"
-      backIcon="back"
-      scrollable={false}
-    >
-      {/* Filter Buttons */}
-      <View style={styles.filterContainer}>
-        <FilterButton value="all" label="All" />
-        <FilterButton value="add" label="Added" />
-        <FilterButton value="edit" label="Edited" />
-        <FilterButton value="delete" label="Deleted" />
-      </View>
-
-      {/* Activity List */}
+    <View style={[styles.container, { backgroundColor: colors.surface }]}>
       <FlatList
         data={filteredData}
         renderItem={renderActivity}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View>
+            {/* Page Header */}
+            <View style={styles.header}>
+              <Text style={[styles.headerTitle, { color: colors.text }]}>Activity Logs</Text>
+              <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
+                Your recent actions
+              </Text>
+            </View>
+
+            {/* Filter Buttons */}
+            <View style={styles.filterContainer}>
+              <FilterButton value="all" label="All" />
+              <FilterButton value="add" label="Added" />
+              <FilterButton value="edit" label="Edited" />
+              <FilterButton value="delete" label="Deleted" />
+            </View>
+          </View>
+        }
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Ionicons name="time-outline" size={48} color={colors.textSecondary} />
@@ -184,15 +188,28 @@ export default function ActivityScreen() {
           </View>
         }
       />
-    </ScreenWrapper>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    marginBottom: spacing.md,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    marginTop: 4,
+  },
   filterContainer: {
     flexDirection: 'row',
     gap: spacing.sm,
-    paddingHorizontal: spacing.md,
     marginBottom: spacing.md,
   },
   filterButton: {
@@ -206,8 +223,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   listContent: {
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.xxl,
+    padding: layout.screenPadding,
+    paddingBottom: layout.tabBarPadding,
     gap: spacing.sm,
   },
   activityCard: {
