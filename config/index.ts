@@ -37,6 +37,7 @@ export {
 
 // Navigation configs
 export { default as quickActionsNavigation } from './quickactions.navigation';
+export { default as secondaryQuickActionsNavigation } from './secondary-quickactions.navigation';
 export { default as siteNavigation } from './site.navigation';
 export { default as tabsNavigation } from './tabs.navigation';
 

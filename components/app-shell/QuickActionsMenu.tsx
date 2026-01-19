@@ -23,6 +23,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { animation, appFeatures, layout, overlay, quickActionsNavigation, shadows, spacing, springs } from '@/config';
+import { useDynamicTabs } from '@/contexts/DynamicTabContext';
 import { useQuickActions } from '@/contexts/QuickActionsContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import type { QuickActionItem } from '@/interfaces';
@@ -33,8 +34,15 @@ export default function QuickActionsMenu() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { isOpen, closeQuickActions } = useQuickActions();
+  const { currentConfig } = useDynamicTabs();
   const colors = useThemeColors();
   const features = appFeatures;
+
+  // Use tab-specific quick actions if defined, otherwise use global quick actions
+  const actionsToShow = currentConfig.quickActions || quickActionsNavigation;
+  const menuTitle = currentConfig.quickActions
+    ? (currentConfig.floatingAction?.label || 'Actions')
+    : 'Quick Actions';
 
   const overlayOpacity = useSharedValue(0);
   const menuTranslateY = useSharedValue(SCREEN_HEIGHT);
@@ -112,10 +120,10 @@ export default function QuickActionsMenu() {
         >
           <View style={[styles.handle, { backgroundColor: colors.border }]} />
 
-          <Text style={[styles.menuTitle, { color: colors.text }]}>Quick Actions</Text>
+          <Text style={[styles.menuTitle, { color: colors.text }]}>{menuTitle}</Text>
 
           <View style={styles.actionsGrid}>
-            {quickActionsNavigation.map((item) => (
+            {actionsToShow.map((item) => (
               <TouchableOpacity
                 key={item.id}
                 style={styles.actionItem}

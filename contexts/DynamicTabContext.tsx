@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
-import type { TabItem } from '@/interfaces';
+import { secondaryQuickActionsNavigation } from '@/config';
+import type { QuickActionItem, TabItem } from '@/interfaces';
 
 /**
  * DYNAMIC TAB NAVIGATION SYSTEM
@@ -72,6 +73,8 @@ export interface TabConfig {
     onPress?: () => void;
     color?: string;
   };
+  /** Quick action menu items specific to this tab config (overrides default quick actions) */
+  quickActions?: QuickActionItem[];
 }
 
 /**
@@ -148,6 +151,8 @@ export const TAB_CONFIGS: Record<string, TabConfig> = {
       label: 'Notes',
       color: '#6366F1',
     },
+    // Custom quick actions imported from config/secondary-quickactions.navigation.ts
+    quickActions: secondaryQuickActionsNavigation,
   },
 
   // Tools/utilities tab configuration
