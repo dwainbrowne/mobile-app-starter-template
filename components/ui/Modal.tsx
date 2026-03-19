@@ -89,7 +89,7 @@ export function AppModal({
   scrollable = true,
 }: AppModalProps) {
   const insets = useSafeAreaInsets();
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const modalHeight = size === 'tall' ? SCREEN_HEIGHT * 0.85 : SCREEN_HEIGHT * 0.60;
 
@@ -98,16 +98,16 @@ export function AppModal({
       case 'danger':
         return { backgroundColor: '#EF4444' };
       case 'secondary':
-        return { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border };
+        return { backgroundColor: '#F3F4F6', borderWidth: 1, borderColor: '#E5E7EB' };
       case 'primary':
       default:
-        return { backgroundColor: colors.primary };
+        return { backgroundColor: '#7B42F6' };
     }
   };
 
   const getButtonTextStyle = (variant: ModalButton['variant']) => {
     if (variant === 'secondary') {
-      return { color: colors.text };
+      return { color: '#1F2937' };
     }
     return { color: '#FFFFFF' };
   };

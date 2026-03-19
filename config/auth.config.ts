@@ -71,23 +71,23 @@ export const AUTH_TYPE: AuthType = 'standard';
 // BRANDING CONFIGURATION
 // ===========================================
 export const brandingConfig: BrandingConfig = {
-  appName: 'Mobile Starter',
-  tagline: 'Your app, your way',
+  appName: 'SnapSuite',
+  tagline: 'Field Service Management',
   // Uncomment and add your logo images:
   // logoSource: require('@/assets/images/logo.png'),
   // iconSource: require('@/assets/images/icon.png'),
   showAppNameWithLogo: true,
-  companyName: 'Your Company',
-  copyrightText: '© 2026 Your Company. All rights reserved.',
+  companyName: 'SnapSuite',
+  copyrightText: '© 2026 SnapSuite. All rights reserved.',
 };
 
 // ===========================================
 // VERSION INFORMATION
 // ===========================================
 export const versionInfo: VersionInfo = {
-  version: '1.0.0',
-  buildNumber: '1',
-  buildDate: '1/18/2026',
+  version: '1.2.0',
+  buildNumber: '85',
+  buildDate: '3/18/2026',
 };
 
 // ===========================================

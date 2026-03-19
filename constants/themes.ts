@@ -38,22 +38,22 @@ import type { ThemeDefinition, ThemeStyle } from '@/interfaces/theme';
 // ===========================================
 
 const brandColors = {
-  // Primary purple-blue gradient
-  primary: '#6366F1', // Indigo-500
-  primaryLight: '#818CF8', // Indigo-400
-  primaryDark: '#4F46E5', // Indigo-600
+  // Primary purple-blue (SnapSuite brand gradient)
+  primary: '#7B42F6', // SnapSuite Purple
+  primaryLight: '#9B6BFA', // Lighter purple
+  primaryDark: '#5B2BD4', // Deeper purple
 
-  // Secondary blue
-  secondary: '#3B82F6', // Blue-500
+  // Secondary blue (gradient end)
+  secondary: '#4A7CF7', // SnapSuite Blue
 
-  // Accent orange for buttons/CTAs
-  accent: '#F97316', // Orange-500
+  // Accent green for action buttons
+  accent: '#10B981', // Green (Quick Clock In, Accept)
 
   // Semantic colors
   danger: '#EF4444', // Red-500
   success: '#10B981', // Emerald-500
   warning: '#F59E0B', // Amber-500
-  info: '#06B6D4', // Cyan-500
+  info: '#3B82F6', // Blue-500
 };
 
 // ===========================================
@@ -156,53 +156,53 @@ export const emeraldLightTheme: ThemeDefinition = {
 
 /**
  * Violet Light Theme
- * Purple/blue gradient light theme (like SnapSuite's purple branding)
- * Primary color: Violet/Purple (#8B5CF6)
+ * Purple/blue gradient light theme (SnapSuite's purple branding)
+ * Primary color: SnapSuite Purple (#7B42F6)
  */
 export const violetLightTheme: ThemeDefinition = {
   id: 'violet' as ThemeStyle,
   name: 'Violet',
-  description: 'Purple-blue gradient light theme',
+  description: 'SnapSuite purple-blue theme',
   isDark: false,
   palette: {
-    // Override brand colors for violet theme
-    primary: '#8B5CF6',       // Violet-500
-    primaryLight: '#A78BFA',  // Violet-400
-    primaryDark: '#7C3AED',   // Violet-600
-    secondary: '#6366F1',     // Indigo-500
-    accent: '#EC4899',        // Pink-500 (instead of orange)
+    // SnapSuite brand colors
+    primary: '#7B42F6',       // SnapSuite Purple
+    primaryLight: '#9B6BFA',  // Lighter purple
+    primaryDark: '#5B2BD4',   // Deeper purple
+    secondary: '#4A7CF7',     // SnapSuite Blue
+    accent: '#10B981',        // Green (action buttons)
     danger: '#EF4444',
     success: '#10B981',
     warning: '#F59E0B',
-    info: '#06B6D4',
+    info: '#3B82F6',
 
-    // Backgrounds - Light gray-violet surface for card separation
+    // Backgrounds - Light surfaces matching screenshots
     background: '#FFFFFF',
     backgroundSecondary: '#F5F3FF', // Violet-50
-    surface: '#FAF5FF', // Purple-50 - provides visual separation for cards
+    surface: '#F3F4F6', // Gray-100 (screenshot body background)
     surfaceElevated: '#FFFFFF',
 
     // Text
-    text: '#1E293B',
-    textSecondary: '#64748B',
-    textMuted: '#94A3B8',
+    text: '#1F2937',
+    textSecondary: '#6B7280',
+    textMuted: '#9CA3AF',
     textInverse: '#FFFFFF',
 
-    // UI - Violet-tinted borders
-    border: '#E9D5FF', // Violet-200
-    borderLight: '#F5F3FF', // Violet-50
-    divider: '#E9D5FF',
+    // UI
+    border: '#E5E7EB', // Gray-200
+    borderLight: '#F3F4F6', // Gray-100
+    divider: '#E5E7EB',
     overlay: 'rgba(0, 0, 0, 0.5)',
 
     // Interactive
-    ripple: 'rgba(139, 92, 246, 0.1)',
-    highlight: 'rgba(139, 92, 246, 0.05)',
-    disabled: '#CBD5E1',
+    ripple: 'rgba(123, 66, 246, 0.1)',
+    highlight: 'rgba(123, 66, 246, 0.05)',
+    disabled: '#D1D5DB',
 
     // Navigation
-    tabIconDefault: '#64748B',
-    tabIconSelected: '#8B5CF6',
-    tint: '#8B5CF6',
+    tabIconDefault: '#6B7280',
+    tabIconSelected: '#7B42F6',
+    tint: '#7B42F6',
   },
 };
 
@@ -448,5 +448,5 @@ export function getThemeOptionsForMode(isDark: boolean): ThemeDefinition[] {
  */
 export const defaultThemeConfig = {
   mode: 'light' as const,
-  style: 'grey' as ThemeStyle,
+  style: 'violet' as ThemeStyle,
 };

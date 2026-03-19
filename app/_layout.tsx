@@ -33,7 +33,7 @@ function useProtectedRoute(isAuthenticated: boolean) {
       // Redirect to home if authenticated and on login page
       router.replace('/(tabs)');
     }
-  }, [isAuthenticated, segments, isNavigationReady]);
+  }, [isAuthenticated, segments, isNavigationReady, router]);
 }
 
 function RootLayoutInner() {

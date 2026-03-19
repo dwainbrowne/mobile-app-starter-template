@@ -1,12 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { appFeatures, appIdentity } from '@/config';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const snapSuiteLogo = require('@/assets/images/snapsuite-logo-white.png');
+
+import { appFeatures } from '@/config';
 import { useDrawer } from '@/contexts/DrawerContext';
-import { useThemeColors } from '@/contexts/ThemeContext';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -24,16 +27,19 @@ export default function Header({
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { toggleDrawer } = useDrawer();
-  const colors = useThemeColors();
   const features = appFeatures;
-  const { appName, appTagline } = appIdentity;
 
   const handleNotificationPress = () => {
     router.push('/notifications' as any);
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.background, borderBottomColor: colors.border }]}>
+    <LinearGradient
+      colors={['#9333EA', '#3B82F6']}
+      start={{ x: 0, y: 0.5 }}
+      end={{ x: 1, y: 0.5 }}
+      style={[styles.container, { paddingTop: insets.top }]}
+    >
       <View style={styles.content}>
         {/* Left Section - Menu or Back Button */}
         <View style={styles.leftSection}>
@@ -43,7 +49,7 @@ export default function Header({
               onPress={onBackPress}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Ionicons name="arrow-back" size={24} color={colors.text} />
+              <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
@@ -51,26 +57,14 @@ export default function Header({
               onPress={toggleDrawer}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
-              <Ionicons name="menu" size={28} color={colors.text} />
+              <Ionicons name="menu" size={28} color="#FFFFFF" />
             </TouchableOpacity>
           )}
+        </View>
 
-          {/* App Name and Tagline */}
-          {!showBackButton && (
-            <View style={styles.appInfo}>
-              <Text style={[styles.appName, { color: colors.primary }]}>{appName}</Text>
-              {appTagline && (
-                <Text style={[styles.appTagline, { color: colors.textSecondary }]} numberOfLines={1}>
-                  {appTagline}
-                </Text>
-              )}
-            </View>
-          )}
-
-          {/* Title for back button screens */}
-          {showBackButton && title && (
-            <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
-          )}
+        {/* Center Section - Logo */}
+        <View style={styles.centerSection}>
+          <Image source={snapSuiteLogo} style={styles.headerLogo} resizeMode="contain" />
         </View>
 
         {/* Right Section */}
@@ -83,27 +77,25 @@ export default function Header({
                   onPress={handleNotificationPress}
                   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
-                  <Ionicons name="notifications-outline" size={24} color={colors.text} />
+                  <Ionicons name="notifications-outline" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               )}
               <TouchableOpacity
                 style={styles.iconButton}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
-                <Ionicons name="ellipsis-vertical" size={20} color={colors.text} />
+                <Ionicons name="ellipsis-vertical" size={20} color="#FFFFFF" />
               </TouchableOpacity>
             </>
           )}
         </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderBottomWidth: 1,
-  },
+  container: {},
   content: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -115,32 +107,25 @@ const styles = StyleSheet.create({
   leftSection: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: 48,
+  },
+  centerSection: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rightSection: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: 48,
+    justifyContent: 'flex-end',
     gap: 8,
   },
   iconButton: {
     padding: 4,
   },
-  appInfo: {
-    marginLeft: 12,
-    flex: 1,
-  },
-  appName: {
-    fontSize: 18,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-  },
-  appTagline: {
-    fontSize: 11,
-    marginTop: 1,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 12,
+  headerLogo: {
+    width: 140,
+    height: 28,
   },
 });

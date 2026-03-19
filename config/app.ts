@@ -26,18 +26,18 @@ export const appIdentity: AppIdentity = {
 // BRANDING COLORS
 // ===========================================
 export const appColors: AppColors = {
-  primary: '#6366F1', // Indigo/Purple-Blue - main brand color
-  primaryLight: '#818CF8', // Lighter indigo
-  secondary: '#3B82F6', // Blue - secondary actions
-  accent: '#F97316', // Orange - highlights & CTAs
+  primary: '#7B42F6', // SnapSuite Purple - main brand color
+  primaryLight: '#9B6BFA', // Lighter purple
+  secondary: '#4A7CF7', // Blue - gradient end color
+  accent: '#10B981', // Green - action buttons (Quick Clock In, Accept)
   danger: '#EF4444', // Red - destructive actions
   success: '#10B981', // Emerald - success states
   warning: '#F59E0B', // Amber - warnings
-  background: '#0F172A', // Dark slate background
-  surface: '#1E293B', // Card/surface background
-  text: '#F1F5F9', // Primary text (light)
-  textSecondary: '#94A3B8', // Secondary text
-  border: '#334155', // Border color
+  background: '#FFFFFF', // White background (light mode default)
+  surface: '#F3F4F6', // Gray-100 surface background
+  text: '#1F2937', // Dark text
+  textSecondary: '#6B7280', // Secondary text
+  border: '#E5E7EB', // Border color
 };
 
 // ===========================================

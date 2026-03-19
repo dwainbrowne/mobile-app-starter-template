@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Card, CardSection } from '@/components/ui';
 import { appIdentity } from '@/config';
-import { getDarkThemeOptions } from '@/constants/themes';
 import { useFeedback } from '@/contexts/FeedbackContext';
 import { useSettings, useTeam, useUserProfile } from '@/contexts/SettingsContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -15,6 +14,8 @@ import type { ThemeStyle } from '@/interfaces/theme';
 // Theme style preview colors for the selector
 const themePreviewColors: Record<ThemeStyle, string> = {
   grey: '#334155',
+  emerald: '#10B981',
+  violet: '#7B42F6',
   forest: '#1A2E1F',
   ocean: '#132944',
   midnight: '#000000',
@@ -35,9 +36,6 @@ export default function SettingsScreen() {
 
   // Feedback context
   const { openFeedbackModal } = useFeedback();
-
-  const darkThemeOptions = getDarkThemeOptions();
-
   // Setting row component
   const SettingRow = ({
     icon,

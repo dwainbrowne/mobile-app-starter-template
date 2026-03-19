@@ -22,9 +22,10 @@ import {
     Text,
     View,
 } from 'react-native';
-import { WebView, WebViewNavigation } from 'react-native-webview';
+import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 
 import { spacing } from '@/config';
+import { useHeader } from '@/contexts/HeaderContext';
 import { useThemeColors } from '@/contexts/ThemeContext';
 import { cacheUrlVisit, isUrlCached } from '@/services/webcache.service';
 
@@ -54,6 +55,7 @@ export function WebViewScreen({
   onError,
 }: WebViewScreenProps) {
   const colors = useThemeColors();
+  const { setHeaderVisible, setHeaderTitle } = useHeader();
   const webViewRef = useRef<WebView>(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -111,6 +113,24 @@ export function WebViewScreen({
     setError(null);
     webViewRef.current?.reload();
   };
+
+  const handleMessage = useCallback((event: WebViewMessageEvent) => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data);
+      switch (data.type) {
+        case 'headerVisibility':
+          setHeaderVisible(!!data.visible);
+          break;
+        case 'setTitle':
+          if (typeof data.title === 'string') {
+            setHeaderTitle(data.title);
+          }
+          break;
+      }
+    } catch {
+      // Ignore non-JSON messages
+    }
+  }, [setHeaderVisible, setHeaderTitle]);
 
   // For web platform, use iframe
   if (Platform.OS === 'web') {
@@ -212,6 +232,7 @@ export function WebViewScreen({
             onLoadEnd={handleLoadEnd}
             onError={handleError}
             onNavigationStateChange={handleNavigationStateChange}
+            onMessage={handleMessage}
             // Enable scrolling
             scrollEnabled
             bounces

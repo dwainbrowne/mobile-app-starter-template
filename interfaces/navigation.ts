@@ -20,6 +20,7 @@ export interface DrawerMenuItem {
   id: string;
   title: string;
   icon: string; // Icon name (Ionicons)
+  iconColor?: string; // Background color for rounded-square icon
   route?: string; // Internal route to navigate to
   url?: string; // External HTTP URL to open in system browser
   webUrl?: string; // URL to open in in-app WebView (with caching)

@@ -1,4 +1,5 @@
 // Re-export all interfaces
+export * from './api';
 export * from './app';
 export * from './auth';
 export * from './feedback';

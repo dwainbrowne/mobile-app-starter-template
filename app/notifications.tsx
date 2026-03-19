@@ -318,7 +318,7 @@ export default function NotificationsScreen() {
               No notifications
             </Text>
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              You're all caught up! We'll notify you when there's something new.
+              You&apos;re all caught up! We&apos;ll notify you when there&apos;s something new.
             </Text>
           </View>
         }
